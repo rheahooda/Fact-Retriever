@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+     <style>
+         body{
+            background: url('https://i.pinimg.com/originals/7c/b1/b3/7cb1b34d85ddd065021c266deb0d3156.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+         }
+         #fact{
+             display: none;
+         }
+         #fact1{
+             display: none;
+         }
+     </style>
+    <title>Fact Retriever</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card text-white mt-5 p-4"  style="background-color: rgb(104, 3, 3);" >
+                    <h1 style="font-family:'Courier New', Courier, monospace;">Number Facts</h1>
+                    <p style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Enter a number</p>
+                    <input type="number" class="form-control form-control-lg" id="numberInput" placeholder="1234">
+                    <div id="fact" class="card-body">
+                        <h4 class="card-title">
+                            Number Fact
+                        </h4>
+                        <p id="factText" class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mx-auto">
+                <div class="card text-white mt-5 p-4"  style="background-color:rgb(104, 3, 3)">
+                    <h1 style="font-family:'Courier New', Courier, monospace;">Date Facts</h1>
+                    <p style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Enter a random date</p>
+                    <input type="datetime" class="form-control form-control-lg" id="dateInput" placeholder="month/date">
+                    <div id="fact1" class="card-body">
+                        <h4 class="card-title">
+                            Date Fact
+                        </h4>
+                        <p id="factText1" class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let fact = document.querySelector('#fact');
+        let factText=document.querySelector('#factText');
+        let numberInput=document.querySelector('#numberInput');
+        
+        numberInput.addEventListener('input', getFactAjax);
+
+        function getFactAjax(){
+            let number=numberInput.value;
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET','http://numbersapi.com/'+number);
+            xhr.onload = function(){
+              if(this.status == 200 && number!=''){
+                    fact.style.display = 'block';
+                    factText.innerHTML = this.responseText;
+              }
+            }
+            xhr.send();
+        }
+        let fact1 = document.querySelector('#fact1');
+        let factText1=document.querySelector('#factText1');
+        let dateInput=document.querySelector('#dateInput');
+        dateInput.addEventListener('input', getFactAjax1);
+        function getFactAjax1(){
+            let date=dateInput.value;
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET','http://numbersapi.com/'+date);
+            xhr.onload = function(){
+              if(this.status == 200 && date!=''){
+                    fact1.style.display = 'block';
+                    factText1.innerHTML = this.responseText;
+              }
+            }
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
